@@ -187,7 +187,7 @@ class Assets_Core {
 		
 		$asset = Assets::$js[$handle];
 		
-		return HTML::script($handle['src']);
+		return HTML::script($asset['src']);
 	}
 	
 	/**
