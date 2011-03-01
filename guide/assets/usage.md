@@ -12,8 +12,8 @@ assets according to what is needed for the respective action.
 	
 		public function before()
 		{
-                        // Call parent
-                        parent::before()
+			// Call parent
+			parent::before()
 
 			// Setup default styles, javascript, and groups
 			Assets::css('global', 'assets/css/global.css', array('grid', 'reset'), array('media' => 'screen'));
@@ -34,14 +34,14 @@ assets according to what is needed for the respective action.
 
 	class Controller_Blog extends Controller_Base {
 
-                public function before()
-                {
-                    // Call parent
-                    parent::before()
+		public function before()
+		{
+			// Call parent
+			parent::before()
 
-                    // We don't need 'stats.js' within Blog Controller, so don't load it.
-                    Assets::remove_js('stats');
-                }
+			// We don't need 'stats.js' within Blog Controller, so don't load it.
+			Assets::remove_js('stats');
+		}
 		
 		public function action_index()
 		{

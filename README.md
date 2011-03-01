@@ -1,9 +1,4 @@
-# Kohana Assets
-
-## About
-
-Allows assets (CSS, Javascript, etc.) to be included throughout the application, and then outputted later based on dependencies.
-This makes sure all assets will be included in the correct order, no matter what order they are defined in.
+# Asset Manager
 
 ## Usage
 
@@ -15,8 +10,11 @@ assets according to what is needed for the respective action.
 
 	abstract class Controller_Base extends Controller_Template {
 	
-		public function action_before()
+		public function before()
 		{
+			// Call parent
+			parent::before()
+
 			// Setup default styles, javascript, and groups
 			Assets::css('global', 'assets/css/global.css', array('grid', 'reset'), array('media' => 'screen'));
 			Assets::css('reset', 'assets/css/reset.css');
@@ -35,6 +33,15 @@ assets according to what is needed for the respective action.
 **/application/controllers/blog.php**
 
 	class Controller_Blog extends Controller_Base {
+
+		public function before()
+		{
+			// Call parent
+			parent::before()
+
+			// We don't need 'stats.js' within Blog Controller, so don't load it.
+			Assets::remove_js('stats');
+		}
 		
 		public function action_index()
 		{
