@@ -153,7 +153,7 @@ class Assets_Core {
 	 * @param   bool     Whether to show in header or footer
 	 * @return  mixed    Setting returns asset array, getting returns asset HTML
 	 */
-	public static function js($handle, $src = NULL, $deps = NULL, $footer = FALSE)
+	public static function js($handle = FALSE, $src = NULL, $deps = NULL, $footer = FALSE)
 	{
 		if ($handle === TRUE OR $handle === FALSE)
 		{
@@ -305,7 +305,7 @@ class Assets_Core {
 	 * @param  string   Group name
 	 * @return string   Assets content
 	 */
-	public static function all_groups($group)
+	public static function all_group($group)
 	{
 		if ( ! isset(Assets::$groups[$group]))
 		{
