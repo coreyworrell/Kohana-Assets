@@ -268,7 +268,7 @@ class Assets_Core {
 	{
 		if ($handle === NULL)
 		{
-			return Assets::all_group($group);
+			return Assets::all_groups($group);
 		}
 		
 		if ($content === NULL)
