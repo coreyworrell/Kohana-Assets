@@ -312,7 +312,7 @@ class Assets_Core {
 			return FALSE;
 		}
 		
-		foreach (Assets::_sort(Assets::$groups[$groups]) as $handle => $data)
+		foreach (Assets::_sort(Assets::$groups[$group]) as $handle => $data)
 		{
 			$assets[] = Assets::get_group($group, $handle);
 		}
