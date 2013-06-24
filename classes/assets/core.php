@@ -305,7 +305,7 @@ class Assets_Core {
 	 * @param  string   Group name
 	 * @return string   Assets content
 	 */
-	public static function all_group($group)
+	public static function all_groups($group)
 	{
 		if ( ! isset(Assets::$groups[$group]))
 		{
