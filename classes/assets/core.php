@@ -59,9 +59,10 @@ class Assets_Core {
 	 * @param   string   Asset source
 	 * @param   mixed    Dependencies
 	 * @param   array    Attributes for the <link /> element
+	 * @param   string   Conditional comments for IE
 	 * @return  mixed    Setting returns asset array, getting returns asset HTML
 	 */
-	public static function css($handle = NULL, $src = NULL, $deps = NULL, $attrs = NULL)
+	public static function css($handle = NULL, $src = NULL, $deps = NULL, $attrs = NULL, $ie = NULL)
 	{
 		// Return all CSS assets, sorted by dependencies
 		if ($handle === NULL)
@@ -85,6 +86,7 @@ class Assets_Core {
 			'src'   => $src,
 			'deps'  => (array) $deps,
 			'attrs' => $attrs,
+			'ie' 	=> $ie,
 		);
 	}
 	
@@ -103,7 +105,12 @@ class Assets_Core {
 		
 		$asset = Assets::$css[$handle];
 		
-		return HTML::style($asset['src'], $asset['attrs']);
+		$ret = HTML::style($asset['src'], $asset['attrs']);
+
+		if (isset($asset['ie']))
+			return '<!--[if '.$asset['ie'].']>'.$ret.'<![endif]-->';
+		else
+			return $ret;
 	}
 	
 	/**
@@ -151,9 +158,10 @@ class Assets_Core {
 	 * @param   string   Asset source
 	 * @param   mixed    Dependencies
 	 * @param   bool     Whether to show in header or footer
+	 * @param   string   Conditional comments for IE
 	 * @return  mixed    Setting returns asset array, getting returns asset HTML
 	 */
-	public static function js($handle = FALSE, $src = NULL, $deps = NULL, $footer = FALSE)
+	public static function js($handle = FALSE, $src = NULL, $deps = NULL, $footer = FALSE, $ie = NULL)
 	{
 		if ($handle === TRUE OR $handle === FALSE)
 		{
@@ -169,6 +177,7 @@ class Assets_Core {
 			'src'    => $src,
 			'deps'   => (array) $deps,
 			'footer' => $footer,
+			'ie'	 => $ie,
 		);
 	}
 	
@@ -187,7 +196,12 @@ class Assets_Core {
 		
 		$asset = Assets::$js[$handle];
 		
-		return HTML::script($asset['src']);
+		$ret = HTML::script($asset['src']);
+
+		if (isset($asset['ie']))
+			return '<!--[if '.$asset['ie'].']>'.$ret.'<![endif]-->';
+		else
+			return $ret;
 	}
 	
 	/**
