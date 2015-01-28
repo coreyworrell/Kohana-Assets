@@ -33,7 +33,7 @@
  * @author    Corey Worrell
  * @version   1.0
  */
-class Assets_Core {
+class Kohana_Assets {
 
 	/**
 	 * @var  array  CSS assets
