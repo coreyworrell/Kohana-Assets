@@ -49,8 +49,13 @@ class Kohana_Assets {
 	 * @var  array  Other asset groups (meta data, links, etc...)
 	 */
 	public static $groups = array();
-	
-	/**
+
+   /**
+    * @var  array  Javascritp global variables
+    */
+   public static $variables = array();
+
+   /**
 	 * CSS wrapper
 	 *
 	 * Gets or sets CSS assets
@@ -342,8 +347,79 @@ class Kohana_Assets {
 		
 		unset(Assets::$groups[$group][$handle]);
 	}
-	
-	/**
+
+
+   /**
+    * Javascript variables wrapper
+    *
+    * @param string $name
+    * @param mixed $data
+    * @return mixed Setting returns javascript global variables
+    */
+   public static function variable($name = NULL, $data = NULL)
+   {
+      if ($name === NULL)
+      {
+         return Assets::all_variables();
+      }
+
+      if ($data === NULL)
+      {
+         return Assets::get_variable($name);
+      }
+
+      return Assets::$variables[$name] = $data;
+   }
+
+   /**
+    * Get a single js variable
+    *
+    * @param $name
+    * @return string Encoded javascript variable
+    */
+   public static function get_variable($name)
+   {
+      if ( ! isset(Assets::$variables[$name]))
+      {
+         return FALSE;
+      }
+
+      return $name.'='.json_encode(Assets::$variables[$name]).";\n";
+   }
+
+   /**
+    * Get all of javascript variables
+    *
+    * @return string   Assets content
+    */
+   public static function all_variables()
+   {
+      $variables = [];
+      foreach (Assets::_sort(Assets::$variables) as $name => $data)
+      {
+         $variables[] = Assets::get_variable($name);
+      }
+
+      return "<script>\n".implode("\n", $variables)."</script>\n";
+   }
+
+   /**
+    * Remove a javascript variable or all javascript variables
+    *
+    * @param   string   $name
+    * @return  mixed    Empty array or void
+    */
+   public static function remove_variable($name = NULL)
+   {
+      if ($name === NULL)
+      {
+         return Assets::$groups = array();
+      }
+
+      unset(Assets::$variables[$name]);
+   }
+
+   /**
 	 * Sorts assets based on dependencies
 	 *
 	 * @param   array   Array of assets
