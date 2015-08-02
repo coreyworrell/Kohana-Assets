@@ -26,6 +26,9 @@ assets according to what is needed for the respective action.
 			
 			Assets::group('head', 'keywords', '<meta name="keywords" content="'.$this->keywords.'" />');
 			Assets::group('head', 'description', '<meta name="description" content="'.$this->description.'" />');
+
+			// Add Javascript variable
+			Assets::variable('user', Auth::instance()->get_user()->as_array());
 		}
 	
 	}
@@ -47,6 +50,11 @@ assets according to what is needed for the respective action.
 		{
 			// Add CSS for the blog index
 			Assets::css('blog', 'assets/css/blog.css', array('global'));
+
+			// Add Javascript variable
+			Assets::variable('app_settings', [
+				'foo' => 'bar',
+			]);
 			
 			// We don't need 'global.js' on this page, so don't load it.
 			Assets::remove_js('global');
@@ -67,6 +75,8 @@ Then you would output the assets in your template somewhere
 		</head>
 		<body>
 			<!-- Content -->
+
+			<?php echo Assets::variable() ?>
 			<?php echo Assets::js(TRUE) ?>
 			<?php echo Assets::group('footer') ?>
 		</body>
@@ -103,3 +113,14 @@ Removing assets
 	Assets::remove_css();
 	
 	Assets::remove_group('head');
+
+Passing variables to Javascript
+
+	Assets::variable('app_settings', [
+		'foo' => 'bar',
+	]);
+
+	// Remove variable
+	Assets::remove_variable('app_settings');
+
+	
